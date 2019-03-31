@@ -1,9 +1,12 @@
 var path = require('path');
 var webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   entry: './src/index.js',
+  mode: isProd ? 'production' : 'development',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -12,16 +15,11 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [
-          'vue-style-loader',
-          'css-loader'
-        ]
-      },
-      {
         test: /\.scss$/,
         use: [
-          'vue-style-loader',
+          !isProd
+            ? 'vue-style-loader'
+            : MiniCssExtractPlugin.loader,
           'css-loader',
           'sass-loader'
         ],
@@ -32,14 +30,11 @@ module.exports = {
         options: {
           loaders: {
             'scss': [
-              'vue-style-loader',
+              !isProd
+                ? 'vue-style-loader'
+                : MiniCssExtractPlugin.loader,
               'css-loader',
               'sass-loader'
-            ],
-            'sass': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader?indentedSyntax'
             ]
           }
         }
@@ -48,13 +43,6 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
       }
     ]
   },
@@ -81,7 +69,7 @@ module.exports = {
   devtool: '#eval-source-map'
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (isProd) {
   module.exports.devtool = '#source-map';
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
@@ -91,6 +79,9 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'styles.css'
     })
   ]);
 }
