@@ -12,6 +12,15 @@
 
 <style lang="scss">
   .main {
-    padding: 16px 24px;
+    padding-left: 4px;
+    padding-right: 4px;
+
+    @media (min-width: 768px) {
+      padding-left: 8px;
+      padding-right: 8px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 640px;
+    }
   }
 </style>
