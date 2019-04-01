@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    Footer @2018
+`    Footer @{{ new Date().getFullYear() }}
   </footer>
 </template>
 
