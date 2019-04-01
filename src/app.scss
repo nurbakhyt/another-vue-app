@@ -1,1 +1,7 @@
 @import "~normalize-scss/sass/normalize/import-now";
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
