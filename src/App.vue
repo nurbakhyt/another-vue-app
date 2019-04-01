@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  import {mapActions} from 'vuex';
   import AppHeader from './components/Header';
   import AppBody from './components/Body';
   import AppFooter from './components/Footer';
@@ -19,6 +20,16 @@
       AppHeader,
       AppBody,
       AppFooter
+    },
+    mounted () {
+      this.fetchUsers();
+      this.fetchPosts();
+    },
+    methods: {
+      ...mapActions([
+        'fetchUsers',
+        'fetchPosts'
+      ])
     }
   }
 </script>
