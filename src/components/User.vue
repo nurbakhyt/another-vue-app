@@ -36,11 +36,11 @@
       },
       width: {
         type: String,
-        default: 60
+        default: '60'
       },
       height: {
         type: String,
-        default: 60
+        default: '60'
       }
     },
     computed: {
