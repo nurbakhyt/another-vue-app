@@ -27,10 +27,27 @@
 <style lang="scss">
   .header {
     display: flex;
-    justify-content: space-between;
     padding-top: 16px;
     padding-bottom: 16px;
     position: relative;
+
+    > * {
+      flex-shrink: 0;
+      flex-grow: 0;
+
+      &:nth-child(1) {
+        flex-basis: 30%;
+      }
+
+      &:nth-child(2) {
+        flex-basis: 40%;
+        text-align: center;
+      }
+
+      &:nth-child(1) {
+        flex-basis: 30%;
+      }
+    }
   }
 
   .back-btn {
