@@ -2,8 +2,8 @@
   <section class="section main-page">
 
     <post
-      v-for="post in posts"
-      :key="post.id"
+      v-for="(post, idx) in posts"
+      :key="idx"
       :post="post"
       small
     />
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
   import Post from '../components/Post';
 
   export default {
@@ -22,6 +22,16 @@
       ...mapGetters([
         'users',
         'posts'
+      ])
+    },
+    mounted () {
+      this.fetchUsers();
+      this.fetchPosts();
+    },
+    methods: {
+      ...mapActions([
+        'fetchUsers',
+        'fetchPosts'
       ])
     }
   }

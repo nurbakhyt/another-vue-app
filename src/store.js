@@ -9,15 +9,15 @@ const store = new Vuex.Store({
   state: {
     users: [],
     posts: [],
-    userId: null,
-    postId: null,
+    post: null,
+    user: null,
     loading: false
   },
   getters: {
     users: state => state.users,
-    currentUser: state => state.users.find(user => user.id === state.userId),
     posts: state => state.posts,
-    currentPost: state => state.posts.find(post => post.id === state.postId),
+    currentPost: state => state.post,
+    user: state => state.user,
     loading: state => state.loading
   },
   actions: {
@@ -45,14 +45,57 @@ const store = new Vuex.Store({
           .then(response => {
             commit('LOADED_POSTS_MUTATION', response.data);
             state.loading && commit('LOADED_MUTATION');
+            resolve(response.data);
           })
           .catch(response => {
             state.loading && commit('LOADED_MUTATION');
+            reject(response);
           });
       });
     },
-    getPost ({commit}) {},
-    getUser ({commit}) {}
+    getPost ({commit, state}, id) {
+      return new Promise ((resolve, reject) => {
+        const post = state.posts.find(p => p.id === id);
+        if (!!post) {
+          commit('LOADED_POST_MUTATION', post);
+        } else {
+          !state.loading && commit('LOADING_MUTATION');
+
+          Post.get(id)
+            .then(response => {
+              commit('LOADED_POST_MUTATION', response.data);
+              state.loading && commit('LOADED_MUTATION');
+              resolve(response.data);
+            })
+            .catch(response => {
+              state.loading && commit('LOADED_MUTATION');
+              reject(response);
+            });
+        }
+      });
+    },
+    getUser ({commit, state}, id) {
+      return new Promise ((resolve, reject) => {
+        const user = state.users.find(u => u.id === id);
+        if (!!user) {
+          commit('LOADED_USER_MUTATION', user);
+        }
+        else {
+          !state.loading && commit('LOADING_MUTATION');
+
+          User.get(id)
+            .then(response => {
+              commit('LOADED_USER_MUTATION', response.data);
+              state.loading && commit('LOADED_MUTATION');
+              resolve(response.data);
+            })
+            .catch(response => {
+              state.loading && commit('LOADED_MUTATION');
+              reject(response);
+            });
+        }
+      });
+    }
   },
   mutations: {
     LOADING_MUTATION (state) {
@@ -72,6 +115,14 @@ const store = new Vuex.Store({
     },
     SHOW_POST_MUTATION (state, postId) {
       state.postId = postId;
+    },
+    LOADED_POST_MUTATION (state, post) {
+      state.posts.push(post);
+      state.post = post;
+    },
+    LOADED_USER_MUTATION (state, user) {
+      state.users.push(user);
+      state.user = user;
     }
   }
 });

@@ -7,6 +7,7 @@
     <div class="post-author">
       <user
         :user-id="post.userId"
+        :user="user"
         :full="full"
       />
     </div>
@@ -45,6 +46,10 @@
       post: {
         type: Object,
         required: true
+      },
+      user: {
+        type: Object,
+        required: false
       },
       small: {
         type: Boolean,

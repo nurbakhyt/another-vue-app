@@ -2,8 +2,9 @@
   <section class="section post-page">
 
     <post
-      v-if="!!post"
-      :post="post"
+      v-if="!!currentPost"
+      :post="currentPost"
+      :user="user"
       full
     />
 
@@ -13,7 +14,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
   import Post from '../../components/Post';
 
   export default {
@@ -22,14 +23,23 @@
     computed: {
       ...mapGetters([
         'users',
-        'posts'
+        'posts',
+        'currentPost',
+        'user'
       ]),
-      post () {
-        let post = this.posts.find(item => item.id == this.$route.params.id);
-        if (!!post) {
-          return post;
-        }
-      }
+
+    },
+    mounted () {
+      this.getPost(this.$route.params.id)
+        .then(post => {
+          this.getUser(post.userId);
+        });
+    },
+    methods: {
+      ...mapActions([
+        'getPost',
+        'getUser'
+      ])
     }
   }
 </script>

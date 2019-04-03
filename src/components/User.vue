@@ -1,27 +1,23 @@
 <template>
   <div class="user">
     <div
-      v-if="avatar"
       :style="style"
       class="user__avatar"
     >
       {{ avaLetter }}
     </div>
 
-    <p
-      v-if="name"
-      class="user__name"
-    >
-      {{ user.name }}
+    <p class="user__name">
+      {{ author && author.name }}
     </p>
 
     <a
       v-if="full"
-      :href="`http://${user.website}`"
+      :href="`http://${author && author.website}`"
       class="user__website"
       title="User's website"
     >
-      {{ user.website }}
+      {{ author && author.website }}
     </a>
   </div>
 </template>
@@ -36,13 +32,9 @@
         type: Number,
         required: true
       },
-      avatar: {
-        type: Boolean,
-        default: true
-      },
-      name: {
-        type: Boolean,
-        default: true
+      user: {
+        type: Object,
+        required: false
       },
       width: {
         type: String,
@@ -59,11 +51,15 @@
     },
     computed: {
       ...mapGetters(['users']),
-      user () {
-        return this.users.find(user => user.id === this.userId);
+      author () {
+        if (!!this.user) {
+          return this.user;
+        }
+
+        return this.users.find(u => u.id === this.userId);
       },
       avaLetter () {
-        return this.user.name[0];
+        return this.author && this.author.name[0];
       },
       style () {
         return {
