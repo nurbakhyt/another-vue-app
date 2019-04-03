@@ -5,7 +5,10 @@
     :style="style"
   >
     <div class="post-author">
-      <user :user-id="post.userId"/>
+      <user
+        :user-id="post.userId"
+        :full="full"
+      />
     </div>
 
     <div class="post-body">

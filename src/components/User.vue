@@ -7,12 +7,22 @@
     >
       {{ avaLetter }}
     </div>
+
     <p
       v-if="name"
       class="user__name"
     >
       {{ user.name }}
     </p>
+
+    <a
+      v-if="full"
+      :href="`http://${user.website}`"
+      class="user__website"
+      title="User's website"
+    >
+      {{ user.website }}
+    </a>
   </div>
 </template>
 
@@ -41,6 +51,10 @@
       height: {
         type: String,
         default: '60'
+      },
+      full: {
+        type: Boolean,
+        default: false
       }
     },
     computed: {
@@ -66,6 +80,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 1em;
 
     &__avatar {
       display: flex;
@@ -74,12 +89,18 @@
       font-size: 1.5em;
       background-color: #27b043;
       border-radius: 100%;
+      margin-bottom: 0.5em;
     }
 
     &__name {
-      margin-top: 0.5em;
+      margin-top: 0;
       margin-bottom: 0.5em;
       text-align: center;
+    }
+    
+    &__website {
+      color: #4a90e2;
+      text-decoration: none;
     }
   }
 </style>
