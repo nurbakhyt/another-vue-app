@@ -2,6 +2,7 @@
   <article
     class="post"
     :class="{'post--small': small}"
+    :style="style"
   >
     <div class="post-author">
       <user :user-id="post.userId"/>
@@ -37,6 +38,17 @@
       small: {
         type: Boolean,
         default: false
+      },
+      full: {
+        type: Boolean,
+        default: false
+      }
+    },
+    computed: {
+      style () {
+        if (this.full) {
+          return {flexDirection: 'column'}
+        }
       }
     }
   }
