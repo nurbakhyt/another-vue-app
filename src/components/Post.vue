@@ -59,7 +59,8 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 12px;
-    padding: 4px 8px;
+    padding-top: 16px;
+    padding-bottom: 16px;
 
     &--small {
       padding: 4px;
@@ -78,11 +79,6 @@
 
     &__text {
       margin: 0 0 0.5em;
-    }
-
-    @media (min-width: 768px) {
-      margin-bottom: 8px;
-      padding: 8px 16px;
     }
   }
 

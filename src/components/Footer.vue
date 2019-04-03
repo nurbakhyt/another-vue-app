@@ -18,6 +18,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 16px 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 </style>

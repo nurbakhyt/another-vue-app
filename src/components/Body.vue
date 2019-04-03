@@ -11,7 +11,9 @@
 </script>
 
 <style lang="scss">
-  .main {
+  .main,
+  .header,
+  .footer {
     padding-left: 4px;
     padding-right: 4px;
 
