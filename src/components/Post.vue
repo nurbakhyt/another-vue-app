@@ -13,11 +13,19 @@
 
     <div class="post-body">
       <router-link
+        v-if="!full"
         :to="{ name: 'post-item', params: { id: post.id } }"
         class="post__title"
       >
         {{ post.title }}
       </router-link>
+
+      <h3
+        v-else
+        class="post__title post__title--not-link"
+      >
+        {{ post.title }}
+      </h3>
 
       <p class="post__text">
         {{ post.body }}
@@ -74,10 +82,11 @@
       display: block;
       font-size: 1.2em;
       margin: 0 0 0.5em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       text-decoration: none;
+      
+      &--not-link {
+        text-align: center;
+      }
     }
 
     &__text {
