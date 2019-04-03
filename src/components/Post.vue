@@ -4,11 +4,7 @@
     :class="{'post--small': small}"
   >
     <div class="post-author">
-      <user
-        :user-id="post.userId"
-        avatar
-        name
-      />
+      <user :user-id="post.userId"/>
     </div>
 
     <div class="post-body">

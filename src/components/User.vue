@@ -2,6 +2,7 @@
   <div class="user">
     <div
       v-if="avatar"
+      :style="style"
       class="user__avatar"
     >
       {{ avaLetter }}
@@ -27,11 +28,19 @@
       },
       avatar: {
         type: Boolean,
-        default: false
+        default: true
       },
       name: {
         type: Boolean,
-        default: false
+        default: true
+      },
+      width: {
+        type: String,
+        default: 60
+      },
+      height: {
+        type: String,
+        default: 60
       }
     },
     computed: {
@@ -41,6 +50,12 @@
       },
       avaLetter () {
         return this.user.name[0];
+      },
+      style () {
+        return {
+          height: `${this.height}px`,
+          width: `${this.width}px`
+        }
       }
     }
   }
@@ -58,9 +73,7 @@
       align-items: center;
       font-size: 1.5em;
       background-color: #27b043;
-      border-radius: 60px;
-      height: 60px;
-      width: 60px;
+      border-radius: 100%;
     }
 
     &__name {
